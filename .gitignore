@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Base de datos local
+*.db
+*.sqlite3
+
+# Secretos y entorno (NUNCA subir al repositorio)
+.env
+.env.*
+!.env.example
+
+# IDE / SO
+.vscode/
+.idea/
+.DS_Store
+
+# Reportes de escaneo
+*-report.json
+*-report.sarif
+zap-report.html

@@ -1,0 +1,23 @@
+# Infraestructura como código para Render (https://render.com)
+# Crea automáticamente el servicio web y la base de datos PostgreSQL.
+services:
+  - type: web
+    name: secure-notes
+    runtime: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn --bind 0.0.0.0:$PORT --workers 2 app:app"
+    healthCheckPath: /health
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true          # Render genera un valor seguro automáticamente
+      - key: DATABASE_URL
+        fromDatabase:
+          name: secure-notes-db
+          property: connectionString
+
+databases:
+  - name: secure-notes-db
+    plan: free
+    databaseName: securenotes
+    user: securenotes

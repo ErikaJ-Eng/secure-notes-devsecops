@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Notes - DevSecOps Demo</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; background:#f7f7f9; color:#222; }
+        h1 { color:#2d3436; }
+        form { background:#fff; padding:1rem; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,.1); margin-bottom:1.5rem; }
+        input, textarea { width:100%; padding:.5rem; margin:.35rem 0; border:1px solid #ccc; border-radius:4px; box-sizing:border-box; }
+        button { background:#0984e3; color:#fff; border:0; padding:.6rem 1rem; border-radius:4px; cursor:pointer; }
+        .note { background:#fff; padding:1rem; border-radius:8px; margin-bottom:.75rem; box-shadow:0 1px 3px rgba(0,0,0,.08); }
+        .note small { color:#888; }
+    </style>
+</head>
+<body>
+    <h1>Secure Notes</h1>
+    <p>Aplicación de demostración con base de datos y controles DevSecOps. <a href="/health">Estado del servicio</a></p>
+
+    <form id="noteForm">
+        <input type="text" id="title" placeholder="Título" maxlength="120" required>
+        <textarea id="content" placeholder="Contenido" rows="3" required></textarea>
+        <button type="submit">Guardar nota</button>
+    </form>
+
+    <div id="notes">
+        {% for note in notes %}
+        <div class="note">
+            <strong>{{ note.title }}</strong>
+            <p>{{ note.content }}</p>
+            <small>{{ note.created_at }}</small>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        document.getElementById('noteForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            const res = await fetch('/api/notes', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, content })
+            });
+            if (res.ok) { location.reload(); }
+            else { alert('Error al guardar la nota'); }
+        });
+    </script>
+</body>
+</html>
