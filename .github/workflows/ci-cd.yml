@@ -1,4 +1,4 @@
-1name: CI-CD DevSecOps
+name: CI-CD DevSecOps
 
 # Se ejecuta en cada push y pull request a main
 on:
