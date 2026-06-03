@@ -8,7 +8,7 @@ WORKDIR /home/appuser/app
 # Instala dependencias primero (mejor cacheo de capas)
 COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip \
-    && pip install-no-cache-dir -r requirements.txt
+    && pip install --no-cache-dir -r requirements.txt
 
 # Copia el código
 COPY . .
